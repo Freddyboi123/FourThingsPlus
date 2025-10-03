@@ -16,12 +16,11 @@ public class UserController {
     }
 
     private static void logout(@NotNull Context ctx) {
-    ctx.sessionAttribute("currentUser",null);
-    ctx.redirect("/");
+        ctx.sessionAttribute("currentUser", null);
+        ctx.redirect("/");
     }
 
-    private static void login(Context ctx)
-    {
+    private static void login(Context ctx) {
         // 1. find username og password som brugeren har indtastet
         String username = ctx.formParam("user_name");
         String password = ctx.formParam("password");
@@ -29,7 +28,7 @@ public class UserController {
         // 2. tjek om det eksisterer i databasen!
         // 2+ lav en user instans og sæt ctx.currentUser = user.
         User user = UserMapper.login(username, password);
-        if(user != null) {
+        if (user != null) {
             ctx.redirect("/main");
             ctx.sessionAttribute("currentUser", user);
 
@@ -39,24 +38,20 @@ public class UserController {
 //            if (currentUser != null) {
 //                System.out.println("Logged in as: " + currentUser.getUsername());
 //            }
-        } else {ctx.redirect("/index.html");}
+        } else {
+            ctx.redirect("/index.html");
+        }
     }
 
-    private static void createUser(Context ctx){
+    private static void createUser(Context ctx) {
 
 
         String username = ctx.formParam("user_name");
         String password = ctx.formParam("password");
 
 
-        User user = UserMapper.createUser(username,password);
-
-
-
-    }
-    private static void downvote (Context ctx){
+        User user = UserMapper.createUser(username, password);
+        ctx.redirect("/");
 
     }
-    private static void upvote (Context ctx){}
-
 }

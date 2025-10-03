@@ -54,4 +54,9 @@ public class UserController {
 
 
     }
+    private static void downvote (Context ctx){
+
+    }
+    private static void upvote (Context ctx){}
+
 }

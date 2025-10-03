@@ -1,11 +1,14 @@
 package ek;
 import ek.config.ThymeleafConfig;
 import ek.controller.UserController;
+import ek.entities.Post;
 import ek.entities.User;
 import ek.persistence.ConnectionPool;
+import ek.persistence.PostMapper;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -17,8 +20,7 @@ public class Main {
     private static final String DB = "four_things_plus";
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/");
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
@@ -34,9 +36,16 @@ public class Main {
 
         app.get("/main", ctx -> {
             User currentUser = ctx.sessionAttribute("currentUser");
-            ctx.render("main_page.html", Map.of("user", currentUser));
+
+            // fetch all posts from DB
+            Post posts = PostMapper.findpost();
+
+            ctx.render("main_page.html", Map.of(
+                    "user", currentUser,
+                    "posts", posts   // 👈 this makes ${posts} available in Thymeleaf
+            ));
         });
-        app.get("/", ctx -> ctx.render("index.html"));
+
 
     }
 }

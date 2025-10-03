@@ -1,3 +1,117 @@
-.text{
-    color: red;
+body {
+    font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+    background: #f5f2e7; /* subtle corkboard/beige tone */
+    margin: 0;
+    padding: 30px;
+    color: #333;
+    background-image: radial-gradient(#e4dfc6 1px, transparent 1px),
+    radial-gradient(#e4dfc6 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px; /* corkboard dotted effect */
+}
+
+/* Outer layout */
+.post-layout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: #fffef9;
+    padding: 25px;
+    border-radius: 14px;
+    border: 2px solid #d8cba7;
+    box-shadow: 4px 6px 15px rgba(0,0,0,0.15);
+    max-width: 750px;
+    margin: auto;
+    transform: rotate(-0.3deg); /* tiny rotation for a pinned-paper feel */
+}
+
+/* Thumbtack / pin effect */
+.post-layout::before {
+    content: "📌";
+    font-size: 28px;
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    transform: rotate(-12deg);
+}
+
+/* Title block */
+.post_structure {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-bottom: 2px dashed #c9bb87;
+}
+
+.post_structure h1,
+.post_structure h2,
+.post_structure h3 {
+    margin: 0;
+}
+
+/* Post title styling */
+.Title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2e2b1d;
+    text-shadow: 1px 1px 0px #fff;
+}
+
+.postTitle {
+    font-size: 22px;
+    color: #194b63;
+    font-weight: bold;
+
+}
+
+/* Secondary info (author, spacing) */
+.secondaryContent {
+    padding-left: 15px;
+    color: #6b6041;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* Post body text */
+p {
+    line-height: 1.7;
+    margin: 12px 0;
+    padding: 14px;
+    background: #fffdf5;
+    border-left: 6px solid #d1c491;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Buttons */
+button {
+    background: #f9d65c;
+    border: none;
+    padding: 10px 16px;
+    margin-top: 12px;
+    margin-right: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 2px 3px 6px rgba(0,0,0,0.15);
+}
+
+button:hover {
+    background: #ffce30;
+    box-shadow: 3px 5px 10px rgba(0,0,0,0.25);
+    transform: translateY(-2px);
+}
+
+/* Logout button styling */
+form button {
+    background: #f4978e;
+}
+
+form button:hover {
+    background: #e76f51;
 }

@@ -3,11 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <link rel="stylesheet" href="../public/css/styles.css">
+
 </head>
 <body>
 
 <h1>Welcome <span th:text="${user.username}">Guest</span>!</h1>
 
+
+<div class = "post-layout">
+
+<!-- Master layout   -->
+
+  <div class="post_structure">
+    <h1 class="Title">
+    Title:
+    </h1>
+    <h1 class="postTitle secondaryContent">  monekys? whats their deal</h1>
+  </div>
+
+    <div class="post_structure">
+      <h2>Author:</h2>
+      <h3 class="author secondaryContent"> ham_med_de_seje_briller</h3>
+
+  </div>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus nisl vitae purus tincidunt laoreet. Morbi auctor neque ut elit mollis, non pretium libero tincidunt. Cras congue metus sed eros bibendum, ac ornare massa accumsan. Suspendisse et congue lorem, eget tristique libero. Mauris gravida diam ac ullamcorper ultrices. Vestibulum sed risus eu dolor facilisis bibendum. In viverra auctor lobortis. Duis vitae lacinia erat. Donec mollis risus non bibendum congue. Nunc hendrerit consequat rhoncus. Sed at rutrum enim. Vestibulum a accumsan erat. Praesent laoreet pellentesque velit. Aenean et risus vel libero consequat pharetra vitae a urna. Vivamus laoreet consequat risus, at congue enim convallis sit amet. Nullam a erat non nisi maximus condimentum quis in urna.</p>
+
+  <button type="submit">Upvote</button>
+  <button type="submit">Downvote</button> <br>
+  </div>
+
+
+
+<div th:each="post : ${posts}" class="post-layout">
+  <div class="post_structure">
+    <h1 class="Title">Title:</h1>
+    <h1 class="postTitle secondaryContent" th:text="${post.title}">Post Title</h1>
+  </div>
+
+  <div class="post_structure">
+    <h2>Author:</h2>
+    <h3 class="author secondaryContent" th:text="${post.user_id}">User</h3>
+  </div>
+
+  <p th:text="${post.content}">Post Content</p>
+
+  <button type="button">Upvote (<span th:text="${post.upvotes}">0</span>)</button>
+  <button type="button">Downvote</button>
+</div>
+
+
+
+
+<br>
+<br>
 <form action="logout" method="post">
   <button type="submit">Log out</button>
 </form>

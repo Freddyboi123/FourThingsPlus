@@ -1,5 +1,6 @@
 package ek;
 import ek.config.ThymeleafConfig;
+import ek.controller.PostController;
 import ek.controller.UserController;
 import ek.entities.Post;
 import ek.entities.User;
@@ -31,18 +32,17 @@ public class Main {
 
 
         UserController.addRoutes(app);
-
+        PostController.addRoutes(app);
 
 
         app.get("/main", ctx -> {
             User currentUser = ctx.sessionAttribute("currentUser");
 
-            // fetch all posts from DB
-            Post posts = PostMapper.findpost();
+            List<Post> posts = PostMapper.findpost(); // ✅ now fetch all posts
 
             ctx.render("main_page.html", Map.of(
                     "user", currentUser,
-                    "posts", posts   // 👈 this makes ${posts} available in Thymeleaf
+                    "posts", posts
             ));
         });
 

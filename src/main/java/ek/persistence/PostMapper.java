@@ -13,14 +13,14 @@ public class PostMapper {
 
 
 
-    public static List<Post> findpost () {
+    public static List<Post> findpost (ConnectionPool cnp) {
         List<Post> posts = new ArrayList<>();
 
 
         String query = "SELECT * FROM post JOIN users using (user_id)";
 
-        try {
-            Connection connection = ConnectionPool.getInstance().getConnection();
+        try (Connection connection =  cnp.getConnection()){
+
             PreparedStatement ps = connection.prepareStatement(query);
 
             ResultSet rs = ps.executeQuery();
@@ -47,12 +47,12 @@ public class PostMapper {
         return posts;
 
     }
-    public static void upvote(int postId){
+    public static void upvote(int postId, ConnectionPool cnp){
 
         String query = "UPDATE post SET upvotes = upvotes + 1  WHERE post_id = ?";
 
-        try {
-            Connection connection = ConnectionPool.getInstance().getConnection();
+        try (Connection connection =  cnp.getConnection()){
+
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1,postId);
 
@@ -68,12 +68,12 @@ public class PostMapper {
     }
 
 
-    public static void downvote(int postId){
+    public static void downvote(int postId, ConnectionPool cnp){
 
         String query = "UPDATE post SET upvotes = upvotes - 1  WHERE post_id = ?";
 
-        try {
-            Connection connection = ConnectionPool.getInstance().getConnection();
+        try (Connection connection =  cnp.getConnection()){
+
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1,postId);
 

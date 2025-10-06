@@ -8,13 +8,15 @@ import java.sql.ResultSet;
 
 public class UserMapper
 {
-    public static User login(String username, String password) {
+    public static User login(String username, String password, ConnectionPool cnp) {
         User user = null;
 
         String query = "SELECT * FROM users WHERE user_name = ? AND password = ?";
 
-        try {
-            Connection connection = ConnectionPool.getInstance().getConnection();
+        try (Connection connection =  cnp.getConnection())
+
+        {
+
             PreparedStatement ps = connection.prepareStatement(query);
 
             ps.setString(1, username);
@@ -26,6 +28,8 @@ public class UserMapper
                 // WUHU vi har fundet match!
                 user = new User(username, password);
             }
+
+
             else
             {
                 System.out.println("konto ikke fundet");
@@ -43,13 +47,13 @@ public class UserMapper
 
 
 
-    public static User createUser(String username, String password) {
+    public static User createUser(String username, String password, ConnectionPool cnp) {
 
 
         String query = "INSERT INTO users (user_name,password) VALUES (?, ? )";
         User user = null;
-        try {
-            Connection connection = ConnectionPool.getInstance().getConnection();
+        try (Connection connection =  cnp.getConnection()){
+
             PreparedStatement ps = connection.prepareStatement(query);
 
             ps.setString(1, username);

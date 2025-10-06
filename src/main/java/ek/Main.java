@@ -1,6 +1,6 @@
 package ek;
 import ek.config.ThymeleafConfig;
-import ek.controller.PostController;
+
 import ek.controller.UserController;
 import ek.entities.Post;
 import ek.entities.User;
@@ -11,6 +11,8 @@ import io.javalin.rendering.template.JavalinThymeleaf;
 
 import java.util.List;
 import java.util.Map;
+
+
 
 
 public class Main {
@@ -28,17 +30,27 @@ public class Main {
             config.staticFiles.add("/templates");
         }).start(7079);
 
+        app.post("/login", ctx -> UserController.login(ctx,connectionPool));
+        app.post("/createuser", ctx -> UserController.createUser(ctx,connectionPool));
+        app.post("/logout", ctx -> UserController.logout(ctx));
 
+        app.post("/posts/upvote/{id}", ctx -> {
+            int postId = Integer.parseInt(ctx.pathParam("id"));
+            PostMapper.upvote(postId,connectionPool);
 
+            ctx.redirect("/main");
+        });
 
-        UserController.addRoutes(app);
-        PostController.addRoutes(app);
-
+        app.post("/posts/downvote/{id}", ctx -> {
+            int postId = Integer.parseInt(ctx.pathParam("id"));
+            PostMapper.downvote(postId,connectionPool);
+            ctx.redirect("/main");
+        });
 
         app.get("/main", ctx -> {
             User currentUser = ctx.sessionAttribute("currentUser");
 
-            List<Post> posts = PostMapper.findpost(); // ✅ now fetch all posts
+            List<Post> posts = PostMapper.findpost(connectionPool); // ✅ now fetch all posts
 
             ctx.render("main_page.html", Map.of(
                     "user", currentUser,
